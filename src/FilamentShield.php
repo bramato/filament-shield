@@ -103,9 +103,13 @@ class FilamentShield
 
     public static function createRole(string $name = null)
     {
+        $data[] = ['name' => $name ?? Utils::getSuperAdminName()];
+        $data[] = ['guard_name' => Utils::getFilamentAuthGuard()];
+        if(Utils::getPanelHasTenancy()){
+            $data[] = [Utils::getTenantForeignKey() => Utils::getTenantId()];
+        }
         return Utils::getRoleModel()::firstOrCreate(
-            ['name' => $name ?? Utils::getSuperAdminName()],
-            ['guard_name' => Utils::getFilamentAuthGuard()]
+            $data
         );
     }
 

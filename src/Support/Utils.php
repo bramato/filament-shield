@@ -222,4 +222,22 @@ class Utils
     {
         return config('filament-shield.discovery.discover_all_pages', false);
     }
+
+    public static function getPanelHasTenancy(): bool
+    {
+        return Filament::hasTenancy();
+    }
+
+    public static function getTenantId(): int{
+        if(!Filament::hasTenancy()){
+            return 0;
+        }
+        return Filament::getTenant()->id;
+    }
+
+    public static function getTenantForeignKey(): string
+    {
+        return config('permissions.column_names.team_foreign_key', 'team_id');
+    }
+
 }
